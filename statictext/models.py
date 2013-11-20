@@ -16,7 +16,7 @@ class StaticText(models.Model):
         The unicode representation will contain the first fifty characters of
         the content followed by '(Disabled)' if the snippet is disabled.
         """
-        truncated_content = (self.content[:50] + "...") if len(self.slug) > 50 else self.content
+        truncated_content = (self.content[:50] + "...") if len(self.content) > 50 else self.content
         enabled = "" if self.enabled else " (Disabled)"
 
         return "\"%s\"%s" % (truncated_content, enabled)
