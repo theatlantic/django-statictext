@@ -1,6 +1,6 @@
 from django.db import models
 
-__all__ = ["StaticText", "SingleStaticText"]
+__all__ = ["StaticText",]
 
 
 class StaticText(models.Model):
@@ -11,21 +11,16 @@ class StaticText(models.Model):
     url = models.URLField(name="URL", blank=True)
     slug = models.SlugField(db_index=True)
 
+    def __unicode__(self):
+        """
+        The unicode representation will contain the first fifty characters of
+        the content followed by '(Disabled)' if the snippet is disabled.
+        """
+        truncated_content = (self.content[:50] + "...") if len(self.slug) > 50 else self.content
+        enabled = "" if self.enabled else " (Disabled)"
+
+        return "\"%s\"%s" % (truncated_content, enabled)
+
     class Meta:
         verbose_name = u'Text Snippet'
         verbose_name_plural = u'Text Snippets'
-
-
-class StaticTextProxyManager(models.Manager):
-
-    def get_object(self):
-        # Make one row for the proxy class if it doesn't exist yet
-        obj, _ = self.get_or_create(slug=self.model.proxy_slug)
-        return obj
-
-
-class SingleStaticText(StaticText):
-    objects = StaticTextProxyManager()
-
-    class Meta:
-        abstract = True

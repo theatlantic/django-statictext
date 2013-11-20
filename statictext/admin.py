@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 
 from .models import StaticText
 
-__all__ = ["SingleStaticTextAdmin",]
+__all__ = ["StaticTextAdmin", "SingleStaticTextAdmin",]
 
 
 class StaticTextAdmin(admin.ModelAdmin):
@@ -41,5 +41,6 @@ class SingleStaticTextAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         """ Redirect the user to the only object in the admin. """
-        destination = '%s/' % self.model.objects.get_object().id
+        obj, _ = self.model.objects.get_or_create(slug=self.model.proxy_slug)
+        destination = '%s/' % obj.id
         return HttpResponseRedirect(destination)
