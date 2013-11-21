@@ -42,7 +42,11 @@ class SingleStaticTextAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         """ Redirect the user to the only object in the admin. """
-        site = Site.objects.get_current()
+        try:
+            site = self.model.proxy_site
+        except AttributeError:
+            site = Site.objects.get_current()
+
         obj, _ = self.model.objects.get_or_create(slug=self.model.proxy_slug, site=site)
 
         return HttpResponseRedirect('%s/' % obj.id)
