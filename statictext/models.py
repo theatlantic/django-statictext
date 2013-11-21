@@ -14,8 +14,6 @@ class StaticText(models.Model):
     slug = models.SlugField(db_index=True)
     site = models.ForeignKey(Site)
 
-    objects = CurrentSiteManager()
-
     def __unicode__(self):
         """
         The unicode representation will contain the first fifty characters of
@@ -29,3 +27,5 @@ class StaticText(models.Model):
     class Meta:
         verbose_name = u'Text Snippet'
         verbose_name_plural = u'Text Snippets'
+
+        unique_together = (("slug", "site"),)
