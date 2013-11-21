@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 
 __all__ = ["StaticText",]
 
@@ -10,6 +12,9 @@ class StaticText(models.Model):
     content = models.TextField(max_length=500, blank=True)
     url = models.URLField(name="URL", blank=True)
     slug = models.SlugField(db_index=True)
+    site = models.ForeignKey(Site)
+
+    objects = CurrentSiteManager()
 
     def __unicode__(self):
         """

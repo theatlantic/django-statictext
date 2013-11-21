@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect
 
 from .models import StaticText
@@ -41,6 +42,7 @@ class SingleStaticTextAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         """ Redirect the user to the only object in the admin. """
-        obj, _ = self.model.objects.get_or_create(slug=self.model.proxy_slug)
-        destination = '%s/' % obj.id
-        return HttpResponseRedirect(destination)
+        site = Site.objects.get_current()
+        obj, _ = self.model.objects.get_or_create(slug=self.model.proxy_slug, site=site)
+
+        return HttpResponseRedirect('%s/' % obj.id)
