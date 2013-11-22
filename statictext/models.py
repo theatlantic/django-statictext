@@ -10,7 +10,7 @@ class StaticText(models.Model):
 
     enabled = models.BooleanField(default=False, help_text="Display on Site")
     content = models.TextField(max_length=500, blank=True)
-    url = models.URLField(name="URL", blank=True)
+    url = models.URLField("URL", blank=True)
     slug = models.SlugField(db_index=True)
     site = models.ForeignKey(Site)
 

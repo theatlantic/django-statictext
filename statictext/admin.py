@@ -11,7 +11,7 @@ class StaticTextAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('enabled', 'slug', 'content', 'URL',)
+            'fields': ('enabled', 'slug', 'content', 'url',)
         }),
     )
 
@@ -23,7 +23,7 @@ class SingleStaticTextAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('enabled', 'content', 'URL',)
+            'fields': ('enabled', 'content', 'url',)
         }),
     )
 
