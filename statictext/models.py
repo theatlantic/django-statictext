@@ -10,16 +10,21 @@ class ProxySite(object):
     Use the ProxySite descriptor to lazy-evaluate site definitions. Useful
     during testing if the django_site table does not exist.
     """
+    _site = None
+
     def __init__(self, **kwargs):
-        try:
-            self.site = Site.objects.get(**kwargs)
-        except:
-            self.site = None
+        self.kwargs = kwargs
 
-    def __get__(self, object, value):
-        return self.site
+    def __get__(self, instance, owner):
+        if not self._site:
+            try:
+                self._site = Site.objects.get(**self.kwargs)
+            except Site.DoesNotExist:
+                pass
 
-    def __set__(self, object, value):
+        return self._site
+
+    def __set__(self, instance, value):
         raise ValueError("Setting ProxySite after instantiation is not supported.")
 
 
