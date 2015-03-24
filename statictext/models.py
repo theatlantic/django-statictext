@@ -2,7 +2,25 @@ from django.db import models
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 
-__all__ = ["StaticText",]
+__all__ = ["StaticText", "ProxySite",]
+
+
+class ProxySite(object):
+    """
+    Use the ProxySite descriptor to lazy-evaluate site definitions. Useful
+    during testing if the django_site table does not exist.
+    """
+    def __init__(self, **kwargs):
+        try:
+            self.site = Site.objects.get(**kwargs)
+        except:
+            self.site = None
+
+    def __get__(self, object, value):
+        return self.site
+
+    def __set__(self, object, value):
+        raise ValueError("Setting ProxySite after instantiation is not supported.")
 
 
 class StaticText(models.Model):
