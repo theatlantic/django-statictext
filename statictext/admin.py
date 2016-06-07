@@ -2,31 +2,13 @@ from django.contrib import admin
 from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect
 
-from .models import StaticText
+from .forms import StaticTextForm
 
-__all__ = ["StaticTextAdmin", "SingleStaticTextAdmin",]
-
-
-class StaticTextAdmin(admin.ModelAdmin):
-
-    fieldsets = (
-        (None, {
-            'fields': ('enabled', 'slug', 'content', 'url',)
-        }),
-    )
+__all__ = ["SingleStaticTextAdmin", ]
 
 
 class SingleStaticTextAdmin(admin.ModelAdmin):
-    """
-    This admin class is designed to be used with statictext.SingleStaticText.
-    """
-
-    fieldsets = (
-        (None, {
-            'fields': ('enabled', 'content', 'url', 'layout',)
-        }),
-    )
-
+    form = StaticTextForm
 
     # Make it a singleton item
     def get_actions(self, request):
