@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='statictext',
             name='kicker',
-            field=models.CharField(default=b'', max_length=100, blank=True),
+            field=models.CharField(default=b'', max_length=50, blank=True),
         ),
     ]
