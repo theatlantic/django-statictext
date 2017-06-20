@@ -30,7 +30,7 @@ class ProxySite(object):
 
 class StaticText(models.Model):
     """Stores a bit of rich text with a lookup slug and an enabled bool"""
-
+    kicker = models.CharField(max_length=50, blank=True, default="")
     enabled = models.BooleanField(default=False, help_text="Display on Site")
     content = models.TextField(max_length=500, blank=True)
     url = models.URLField("URL", blank=True)
