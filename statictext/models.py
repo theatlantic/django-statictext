@@ -35,7 +35,7 @@ class StaticText(models.Model):
     content = models.TextField(max_length=500, blank=True)
     url = models.URLField("URL", blank=True)
     slug = models.SlugField(db_index=True)
-    site = models.ForeignKey(Site)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
     layout = models.CharField(max_length=100, blank=True, default="")
 
     def __unicode__(self):

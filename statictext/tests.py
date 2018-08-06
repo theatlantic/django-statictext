@@ -6,11 +6,27 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from django.contrib.sites.models import Site
+
+from .models import StaticText
+from .forms import StaticTextWithLayoutForm
 
 
 class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+    
+    def test_statictext(self):
+        """Very basic test for model and form."""
+
+        form = StaticTextWithLayoutForm({
+            'enabled': True,
+            'content': 'loremipsum' * 10,
+            'url': 'http://domain.com/url/',
+            'layout': 'layout',
+        })
+        self.assertEqual(form.is_valid(), True)
+
+        statx = form.save(commit=False)
+        statx.site = Site.objects.create(domain='domain.com', name='Domain')
+        statx.save()
+
+        self.assertTrue(u'...' in unicode(statx))
