@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('url', models.URLField(verbose_name=b'URL', blank=True)),
                 ('slug', models.SlugField()),
                 ('layout', models.CharField(default=b'', max_length=100, blank=True)),
-                ('site', models.ForeignKey(to='sites.Site')),
+                ('site', models.ForeignKey(to='sites.Site', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'Text Snippet',
