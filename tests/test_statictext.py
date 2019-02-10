@@ -8,12 +8,12 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from django.contrib.sites.models import Site
 
-from .models import StaticText
-from .forms import StaticTextWithLayoutForm
+from statictext.models import StaticText
+from statictext.forms import StaticTextWithLayoutForm
 
 
 class SimpleTest(TestCase):
-    
+
     def test_statictext(self):
         """Very basic test for model and form."""
 
@@ -29,4 +29,4 @@ class SimpleTest(TestCase):
         statx.site = Site.objects.create(domain='domain.com', name='Domain')
         statx.save()
 
-        self.assertTrue(u'...' in unicode(statx))
+        self.assertTrue('...' in str(statx))
