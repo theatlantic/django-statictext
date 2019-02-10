@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
+from django.utils.six import python_2_unicode_compatible
 
-__all__ = ["StaticText", "ProxySite",]
+__all__ = ["StaticText", "ProxySite"]
 
 
 class ProxySite(object):
@@ -28,6 +29,7 @@ class ProxySite(object):
         raise ValueError("Setting ProxySite after instantiation is not supported.")
 
 
+@python_2_unicode_compatible
 class StaticText(models.Model):
     """Stores a bit of rich text with a lookup slug and an enabled bool"""
     kicker = models.CharField(max_length=50, blank=True, default="")
@@ -38,15 +40,15 @@ class StaticText(models.Model):
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     layout = models.CharField(max_length=100, blank=True, default="")
 
-    def __unicode__(self):
+    def __str__(self):
         """
         The unicode representation will contain the first fifty characters of
         the content followed by '(Disabled)' if the snippet is disabled.
         """
-        truncated_content = (self.content[:50] + "...") if len(self.content) > 50 else self.content
+        truncated = (self.content[:50] + "...") if len(self.content) > 50 else self.content
         enabled = "" if self.enabled else " (Disabled)"
 
-        return "\"%s\"%s" % (truncated_content, enabled)
+        return "\"%s\"%s" % (truncated, enabled)
 
     class Meta:
         verbose_name = u'Text Snippet'
