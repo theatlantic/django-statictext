@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
-from django.utils.six import python_2_unicode_compatible
+from six import python_2_unicode_compatible
 
 __all__ = ["StaticText", "ProxySite"]
 
