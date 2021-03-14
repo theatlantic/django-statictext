@@ -8,7 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from django.contrib.sites.models import Site
 
-from statictext.models import StaticText
+from statictext.models import StaticText  # NOQA
 from statictext.forms import StaticTextWithLayoutForm
 
 

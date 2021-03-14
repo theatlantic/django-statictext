@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.sites.models import Site
-from django.contrib.sites.managers import CurrentSiteManager
-from six import python_2_unicode_compatible
 
 __all__ = ["StaticText", "ProxySite"]
 
@@ -29,7 +27,6 @@ class ProxySite(object):
         raise ValueError("Setting ProxySite after instantiation is not supported.")
 
 
-@python_2_unicode_compatible
 class StaticText(models.Model):
     """Stores a bit of rich text with a lookup slug and an enabled bool"""
     kicker = models.CharField(max_length=50, blank=True, default="")
